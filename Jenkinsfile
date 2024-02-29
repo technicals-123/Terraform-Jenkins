@@ -11,7 +11,7 @@
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/your/repository.git'
+                git 'https://github.com/technicals-123/Terraform-Jenkins.git'
             }
         }
         stage('Terraform Init') {
