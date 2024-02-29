@@ -21,7 +21,14 @@
         }
         stage('Terraform Plan') {
             steps {
-                sh 'terraform plan -var "client_id=${env.ARM_CLIENT_ID}" -var "client_secret=${env.ARM_CLIENT_SECRET}" -var "tenant_id=${env.ARM_TENANT_ID}" -var "subscription_id=${env.ARM_SUBSCRIPTION_ID}" -out=tfplan'
+                script {
+                    sh '''terraform plan \
+                          -var "client_id=${ARM_CLIENT_ID}" \
+                          -var "client_secret=${ARM_CLIENT_SECRET}" \
+                          -var "tenant_id=${ARM_TENANT_ID}" \
+                          -var "subscription_id=${ARM_SUBSCRIPTION_ID}" \
+                          -out=tfplan'''
+                }
             }
         }
         stage('Terraform Apply') {
