@@ -8,7 +8,7 @@
         ARM_SUBSCRIPTION_ID = credentials('ARM_SUBSCRIPTION_ID')
     }
 
-   // stages {
+    stages {
        // stage('Checkout') {
           //  steps {
          //       git 'https://github.com/technicals-123/Terraform-Jenkins.git'
@@ -30,4 +30,4 @@
             }
         }
     }
-}
+ }
