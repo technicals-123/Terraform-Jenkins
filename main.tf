@@ -1,11 +1,15 @@
-provider "aws" {
-    region = "us-east-1"  
-}
 
-resource "aws_instance" "foo" {
-  ami           = "ami-05fa00d4c63e32376" # us-west-2
-  instance_type = "t2.micro"
-  tags = {
-      Name = "TF-Instance"
-  }
+provider "azurerm" {
+   features{}
+}
+resource "azurerm_resource_group" "example" {
+  name     = "resourcenewgroup"
+  location = "West Europe"
+}
+resource "azurerm_storage_account" "example1" {
+  name                     = "storageaccountforfileonetwo"
+  resource_group_name      = azurerm_resource_group.example.name
+  location                 = azurerm_resource_group.example.location
+  account_tier             = "Standard"
+  account_replication_type = "GRS"
 }
