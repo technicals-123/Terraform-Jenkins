@@ -3,7 +3,7 @@ provider "azurerm" {
    features{}
 }
 resource "azurerm_resource_group" "example" {
-  name     = "resourcenewgroup"
+  name     = "rgnewresource"
   location = "West Europe"
 }
 resource "azurerm_storage_account" "example1" {
