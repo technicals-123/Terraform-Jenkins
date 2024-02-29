@@ -9,20 +9,32 @@
     }
 
     stages {
-       // stage('Checkout') {
-          //  steps {
-         //       git 'https://github.com/technicals-123/Terraform-Jenkins.git'
-       //     }
-        //}
+     
         stage('Terraform Init') {
             steps {
                 sh 'terraform init'
             }
         }
+
+       stage('Terraform Plan') {
+             steps{
+                 sh 'terraform plan -out=tfplan'
+             }
+       }
      
+        // stage('Terraform Apply') {
+        //     steps {
+        //         sh 'terraform apply -auto-approve'
+        //     }
+        // }
         stage('Terraform Apply') {
             steps {
-                sh 'terraform apply -auto-approve'
+                script {
+                    def plan = readFile 'tfplan'
+                    input message: "Do you want to apply the plan?",
+                          parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
+                    sh 'terraform apply tfplan'
+                }
             }
         }
     }
