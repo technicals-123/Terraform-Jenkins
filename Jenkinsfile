@@ -19,18 +19,7 @@
                 sh 'terraform init'
             }
         }
-        stage('Terraform Plan') {
-            steps {
-                script {
-                    sh '''terraform plan \
-                          -var "client_id=${ARM_CLIENT_ID}" \
-                          -var "client_secret=${ARM_CLIENT_SECRET}" \
-                          -var "tenant_id=${ARM_TENANT_ID}" \
-                          -var "subscription_id=${ARM_SUBSCRIPTION_ID}" \
-                          -out=tfplan'''
-                }
-            }
-        }
+     
         stage('Terraform Apply') {
             steps {
                 sh 'terraform apply tfplan'
