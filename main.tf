@@ -1,15 +1,9 @@
+module "azure_resources" {
+  source = "./azure_resources"  # Path to your module directory
 
-provider "azurerm" {
-   features{}
-}
-resource "azurerm_resource_group" "example" {
-  name     = "rgnewres"
-  location = "Central India"
-}
-resource "azurerm_storage_account" "example1" {
-  name                     = "storageaccountfortrial"
-  resource_group_name      = azurerm_resource_group.example.name
-  location                 = azurerm_resource_group.example.location
-  account_tier             = "Standard"
-  account_replication_type = "GRS"
+  # Input variables for the module
+  resource_group_name        = "example_rg"
+  resource_group_location    = "Central India"
+  storage_account_name       = "example_storage"
+  blob_container_name        = "example_container"
 }
