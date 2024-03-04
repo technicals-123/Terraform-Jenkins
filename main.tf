@@ -3,7 +3,7 @@ provider "azurerm" {
    features{}
 }
 resource "azurerm_resource_group" "example" {
-  name     = "rgnewresource"
+  name     = "rgnewres"
   location = "Central India"
 }
 resource "azurerm_storage_account" "example1" {
