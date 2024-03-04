@@ -8,7 +8,5 @@ terraform {
 }
 
 provider "azurerm" {
-     features{
-        ManagedDisk=true
-     }
+      # Configuration options
 }
