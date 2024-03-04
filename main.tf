@@ -1,3 +1,7 @@
+provider "azurerm" {
+  features {}
+}
+
 module "azure_resources" {
   source = "./azure_resources"  # Path to your module directory
 
