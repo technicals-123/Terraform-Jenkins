@@ -10,3 +10,9 @@ resource "azurerm_storage_account" "example1" {
   account_tier             = "Standard"
   account_replication_type = "GRS"
 }
+
+resource "azurerm_storage_container" "example_container" {
+  name                  = var.blob_container_name
+  storage_account_name  = azurerm_storage_account.example1.name
+  container_access_type = "private"
+}
