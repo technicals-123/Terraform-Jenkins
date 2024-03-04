@@ -4,7 +4,7 @@ provider "azurerm" {
 }
 resource "azurerm_resource_group" "example" {
   name     = "rgnewresource"
-  location = "West Europe"
+  location = "Central India"
 }
 resource "azurerm_storage_account" "example1" {
   name                     = "storageaccountforfiletwo"
