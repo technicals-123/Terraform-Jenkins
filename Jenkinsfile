@@ -1,4 +1,4 @@
- pipeline {
+pipeline {
     agent any
 
     environment {
@@ -9,33 +9,49 @@
     }
 
     stages {
-     
         stage('Terraform Init') {
             steps {
                 sh 'terraform init'
             }
         }
 
-       stage('Terraform Plan') {
-             steps{
-                 sh 'terraform plan -out=tfplan'
-             }
-       }
-     
-        // stage('Terraform Apply') {
-        //     steps {
-        //         sh 'terraform apply -auto-approve'
-        //     }
-        // }
-        stage('Terraform Apply') {
+        stage('Terraform Plan') {
             steps {
                 script {
-                    def plan = readFile 'tfplan'
-                    input message: "Do you want to apply the plan?",
-                          parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
+                    sh 'terraform plan -out=tfplan'
+                    sh 'terraform show -json tfplan > tfplan.json'
+                }
+            }
+        }
+
+        stage('Review Terraform Plan') {
+            steps {
+                script {
+                    def planOutput = readFile 'tfplan.json'
+                    echo planOutput
+                    input message: "Review the plan before proceeding",
+                          parameters: [text(name: 'Plan', description: 'Terraform plan', defaultValue: planOutput)]
+                }
+            }
+        }
+
+        stage('Apply Terraform Plan') {
+            steps {
+                script {
                     sh 'terraform apply tfplan'
                 }
             }
         }
+
+        stage('Destroy Infrastructure') {
+            steps {
+                script {
+                    input message: "Are you sure you want to destroy the infrastructure?",
+                          ok: "Destroy",
+                          parameters: [choice(name: 'Confirmation', choices: 'Destroy')]
+                    sh 'terraform destroy -auto-approve'
+                }
+            }
+        }
     }
- }
+}
