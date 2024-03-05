@@ -9,25 +9,25 @@ pipeline {
     }
 
     stages {
-        // stage('Terraform Init') {
-        //     steps {
-        //         sh 'terraform init -auto-approve'
-        //     }
-        // }
-stage('Terraform Init') {
-    steps {
-        script {
-            input message: "Do you want to initialize Terraform?",
-                  ok: "Yes",
-                  parameters: [choice(name: 'Confirmation', choices: ['Yes', 'No'])]
-            if (params.Confirmation == 'Yes') {
-                sh 'terraform init'
-            } else {
-                echo 'Skipping Terraform initialization.'
+        stage('Terraform Init') {
+            steps {
+                sh 'terraform init -auto-approve'
             }
         }
-    }
-}
+// stage('Terraform Init') {
+//     steps {
+//         script {
+//             input message: "Do you want to initialize Terraform?",
+//                   ok: "Yes",
+//                   parameters: [choice(name: 'Confirmation', choices: ['Yes', 'No'])]
+//             if (params.Confirmation == 'Yes') {
+//                 sh 'terraform init'
+//             } else {
+//                 echo 'Skipping Terraform initialization.'
+//             }
+//         }
+//     }
+// }
         stage('Terraform Plan') {
             steps {
                 script {
