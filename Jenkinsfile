@@ -55,12 +55,23 @@ stage('Terraform Plan') {
             }
         }
 
-        stage('Review Terraform Plan') {
+        // stage('Review Terraform Plan') {
+        //     steps {
+        //         script {
+        //             sh 'terraform show -no-color tfplan'
+        //             input message: "Review the plan before proceeding",
+        //                   parameters: [text(name: 'Plan', description: 'Terraform plan', defaultValue: 'Review the Terraform plan above')]
+        //         }
+        //     }
+        // }
+stage('Review Terraform Plan') {
             steps {
                 script {
-                    sh 'terraform show -no-color tfplan'
+                    def planOutput = sh(script: 'terraform show -no-color tfplan', returnStdout: true).trim()
+                    echo "Terraform Plan Output:"
+                    echo planOutput
                     input message: "Review the plan before proceeding",
-                          parameters: [text(name: 'Plan', description: 'Terraform plan', defaultValue: 'Review the Terraform plan above')]
+                          parameters: [text(name: 'Plan', description: 'Terraform plan', defaultValue: planOutput)]
                 }
             }
         }
