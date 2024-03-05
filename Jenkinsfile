@@ -28,11 +28,29 @@ pipeline {
 //         }
 //     }
 // }
-        stage('Terraform Plan') {
+        // stage('Terraform Plan') {
+        //     steps {
+        //         script {
+        //             sh 'terraform plan -out=tfplan'
+        //             sh 'terraform show -json tfplan > tfplan.json'
+        //         }
+        //     }
+        // }
+
+        // stage('Review Terraform Plan') {
+        //     steps {
+        //         script {
+        //             def planOutput = readFile 'tfplan.json'
+        //             echo planOutput
+        //             input message: "Review the plan before proceeding",
+        //                   parameters: [text(name: 'Plan', description: 'Terraform plan', defaultValue: planOutput)]
+        //         }
+        //     }
+        // }
+stage('Terraform Plan') {
             steps {
                 script {
                     sh 'terraform plan -out=tfplan'
-                    sh 'terraform show -json tfplan > tfplan.json'
                 }
             }
         }
@@ -40,10 +58,9 @@ pipeline {
         stage('Review Terraform Plan') {
             steps {
                 script {
-                    def planOutput = readFile 'tfplan.json'
-                    echo planOutput
+                    sh 'terraform show -no-color tfplan'
                     input message: "Review the plan before proceeding",
-                          parameters: [text(name: 'Plan', description: 'Terraform plan', defaultValue: planOutput)]
+                          parameters: [text(name: 'Plan', description: 'Terraform plan', defaultValue: 'Review the Terraform plan above')]
                 }
             }
         }
