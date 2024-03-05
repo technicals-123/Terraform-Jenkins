@@ -14,39 +14,9 @@ pipeline {
                 sh 'terraform init'
             }
         }
-// stage('Terraform Init') {
-//     steps {
-//         script {
-//             input message: "Do you want to initialize Terraform?",
-//                   ok: "Yes",
-//                   parameters: [choice(name: 'Confirmation', choices: ['Yes', 'No'])]
-//             if (params.Confirmation == 'Yes') {
-//                 sh 'terraform init'
-//             } else {
-//                 echo 'Skipping Terraform initialization.'
-//             }
-//         }
-//     }
-// }
-        // stage('Terraform Plan') {
-        //     steps {
-        //         script {
-        //             sh 'terraform plan -out=tfplan'
-        //             sh 'terraform show -json tfplan > tfplan.json'
-        //         }
-        //     }
-        // }
 
-        // stage('Review Terraform Plan') {
-        //     steps {
-        //         script {
-        //             def planOutput = readFile 'tfplan.json'
-        //             echo planOutput
-        //             input message: "Review the plan before proceeding",
-        //                   parameters: [text(name: 'Plan', description: 'Terraform plan', defaultValue: planOutput)]
-        //         }
-        //     }
-        // }
+     
+
 stage('Terraform Plan') {
             steps {
                 script {
@@ -55,15 +25,7 @@ stage('Terraform Plan') {
             }
         }
 
-        // stage('Review Terraform Plan') {
-        //     steps {
-        //         script {
-        //             sh 'terraform show -no-color tfplan'
-        //             input message: "Review the plan before proceeding",
-        //                   parameters: [text(name: 'Plan', description: 'Terraform plan', defaultValue: 'Review the Terraform plan above')]
-        //         }
-        //     }
-        // }
+       
 stage('Review Terraform Plan') {
             steps {
                 script {
