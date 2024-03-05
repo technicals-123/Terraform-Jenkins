@@ -7,13 +7,13 @@ pipeline {
         ARM_TENANT_ID = credentials('ARM_TENANT_ID')
         ARM_SUBSCRIPTION_ID = credentials('ARM_SUBSCRIPTION_ID')
     }
-  parameters {
-        booleanParam(
-            name: 'REQUEST_TERMINATE_ON_SUCCESS',
-            defaultValue: false,
-            description: 'Terminate environment on success?'
-        )
-  }
+  // parameters {
+  //       booleanParam(
+  //           name: 'REQUEST_TERMINATE_ON_SUCCESS',
+  //           defaultValue: false,
+  //           description: 'Terminate environment on success?'
+  //       )
+  // }
     stages {
         stage('Terraform Init') {
             steps {
@@ -52,17 +52,7 @@ stage('Review Terraform Plan') {
             }
         }
 
-        // stage('Destroy Infrastructure') {
-        //     steps {
-        //         script {
-        //             input message: "Are you sure you want to destroy the infrastructure?",
-        //                   ok: "Destroy",
-        //                   parameters: [choice(name: 'Confirmation', choices: 'Destroy')]
-        //             sh 'terraform destroy -auto-approve'
-        //         }
-        //     }
-        // }
-   stage('Destroy Infrastructure') {
+        stage('Destroy Infrastructure') {
             steps {
                 script {
                     input message: "Are you sure you want to destroy the infrastructure?",
@@ -72,5 +62,15 @@ stage('Review Terraform Plan') {
                 }
             }
         }
+   // stage('Destroy Infrastructure') {
+   //          steps {
+   //              script {
+   //                  input message: "Are you sure you want to destroy the infrastructure?",
+   //                        ok: "Destroy",
+   //                        parameters: [choice(name: 'Confirmation', choices: 'Destroy')]
+   //                  sh 'terraform destroy -auto-approve'
+   //              }
+   //          }
+   //      }
     }
 }
